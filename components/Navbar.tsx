@@ -14,8 +14,12 @@ const Navbar = () => {
       </div>
 
       <div>
-        <Link href="/cart">
+        <Link
+          href="/cart"
+          className="flex items-center gap-3 border rounded-lg px-2 py-1 hover:bg-black hover:text-white"
+        >
           <ShoppingCart />
+          <p className="text-base-bold">Cart {0}</p>
         </Link>
       </div>
     </div>
