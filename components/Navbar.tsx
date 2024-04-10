@@ -1,7 +1,7 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
-import { Menu, ShoppingCart } from "lucide-react";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { CircleUserRound, Menu, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -36,7 +36,7 @@ const Navbar = () => {
           />
         )}
         {user && dropdownMenu && (
-          <div className="absolute top-10 right-5 flex flex-col gap-2 p-3 rounded-lg border bg-white text-base-bold ">
+          <div className="absolute top-10 right-5 flex flex-col gap-2 p-3 rounded-lg border bg-white text-base-bold">
             <Link href="/wishlist" className="hover:text-red-1">
               Wishlist
             </Link>
@@ -44,6 +44,13 @@ const Navbar = () => {
               Orders
             </Link>
           </div>
+        )}
+        {user ? (
+          <UserButton />
+        ) : (
+          <Link href="/sign-in">
+            <CircleUserRound />
+          </Link>
         )}
       </div>
     </div>
