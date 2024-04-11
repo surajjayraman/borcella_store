@@ -1,9 +1,14 @@
-import React from 'react'
+import { getCollections } from "@/lib/actions";
 
-const Collections = () => {
+const Collections = async () => {
+  const collections = await getCollections();
+  console.log(`getCollections: ${collections}`);
   return (
-    <div>Collections</div>
-  )
-}
+    <div>
+      <p className="text-heading1-bold">Collections</p>
+      <div> </div>
+    </div>
+  );
+};
 
-export default Collections
+export default Collections;
