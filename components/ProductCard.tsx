@@ -1,10 +1,14 @@
+import { HeartIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
   return (
     <div>
-      <Link href={`/products/${product._id}`}>
+      <Link
+        href={`/products/${product._id}`}
+        className="w-[220px] flex flex-col gap-2"
+      >
         <Image
           src={product.media[0]}
           alt={product.title}
@@ -15,10 +19,13 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         <div>
           <p className="text-base-bold">{product.title}</p>
           <p className="text-small-medium text-grey-2">{product.category}</p>
-              </div>
-              <div>
-                  
-              </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <p className="text-body-bold">${product.price}</p>
+          <button>
+            <HeartIcon />
+          </button>
+        </div>
       </Link>
     </div>
   );
