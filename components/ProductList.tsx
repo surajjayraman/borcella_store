@@ -1,6 +1,7 @@
 import { getProducts } from "@/lib/actions";
 import Image from "next/image";
 import React from "react";
+import ProductCard from "./ProductCard";
 
 const ProductList = async () => {
   const products = await getProducts();
@@ -12,16 +13,7 @@ const ProductList = async () => {
       ) : (
         <div>
           {products.map((product: ProductType) => (
-            <div key={product._id} className="flex flex-col items-center gap-5">
-              <Image
-                src={product.image}
-                alt={product.title}
-                className="w-40 h-40 object-cover"
-              />
-              <p className="text-body-bold">{product.title}</p>
-              <p className="text-body">{product.description}</p>
-              <p className="text-body-bold">${product.price}</p>
-            </div>
+            <ProductCard />
           ))}
         </div>
       )}
