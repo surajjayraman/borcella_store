@@ -21,6 +21,20 @@ export const POST = async (req: NextRequest) => {
     if (!productId) {
       return new NextResponse("Product Id required", { status: 400 });
     }
+
+    const isLiked = user.wishlist.includes(productId);
+
+    if (isLiked) {
+      // dislike
+      user.wishlist = user.wishlist.filter((id: string) => id !== productId);
+    } else {
+      // like
+      user.wishlist.push(productId);
+    }
+
+    await user.save();
+
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.log("[wishlist_POST]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
