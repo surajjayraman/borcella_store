@@ -22,7 +22,9 @@ const Gallery = ({ productMedia }: { productMedia: string[] }) => {
             width={200}
             height={200}
             alt="product"
-            className="w-20 h-20 rounded-lg object-cover cursor-pointer"
+            className={`w - 20 h-20 rounded-lg object-cover cursor-pointer ${
+              mainImage === image ? "border-2 border-black" : ""
+            }`}
             onClick={() => setMainImage(image)}
           />
         ))}
