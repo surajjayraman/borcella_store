@@ -10,7 +10,7 @@ const ProductDetails = async ({
   console.log(productDetails);
   return (
     <div className="flex justify-center items-start gap-16 py-10 px-5 max-md:flex-col max-md:items-center">
-      <Gallery />
+      <Gallery productMedia={productDetails.media} />
     </div>
   );
 };
