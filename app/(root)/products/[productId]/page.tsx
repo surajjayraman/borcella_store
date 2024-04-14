@@ -1,9 +1,12 @@
-import React from 'react'
+import { getProductDetails } from "@/lib/actions";
 
-const ProductDetails = () => {
-  return (
-    <div>ProductDetails</div>
-  )
-}
+const ProductDetails = async ({
+  params,
+}: {
+  params: { productId: string };
+}) => {
+  const productDetails = getProductDetails(params.productId);
+  return <div>ProductDetails</div>;
+};
 
-export default ProductDetails
+export default ProductDetails;
