@@ -1,8 +1,37 @@
-import { HeartIcon } from "lucide-react";
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import { Heart } from "lucide-react";
+import { set } from "mongoose";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
+  const { user } = useUser();
+
+  const [loading, setLoading] = useState(false);
+  const [signedInUser, setSignedInUser] = useState<UserType | null>(null);
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/users");
+        const data = await res.json();
+        setSignedInUser(data);
+        setIsLiked(data.wishlist.includes(product._id));
+        setLoading(false);
+      } catch (err) {
+        console.log("[ProductCard_getUser]", err);
+      }
+    };
+    if (user) {
+      getUser();
+    }
+  }, [user, product._id]);
+
   return (
     <div>
       <Link
@@ -23,7 +52,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         <div className="flex justify-between items-center">
           <p className="text-body-bold">${product.price}</p>
           <button>
-            <HeartIcon />
+            <Heart fill={`${isLiked ? "red" : "white"}`} />
           </button>
         </div>
       </Link>

@@ -1,4 +1,5 @@
 import User from "@/lib/models/User";
+import connectToDB from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,6 +10,8 @@ export const POST = async (req: NextRequest) => {
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    await connectToDB();
 
     const user = await User.findOne({ clerkId: userId });
 
