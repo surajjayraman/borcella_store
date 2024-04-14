@@ -5,8 +5,13 @@ const ProductDetails = async ({
 }: {
   params: { productId: string };
 }) => {
-  const productDetails = getProductDetails(params.productId);
-  return <div>ProductDetails</div>;
+  const productDetails = await getProductDetails(params.productId);
+  console.log(productDetails);
+  return (
+    <div className="flex justify-center items-start gap-16 py-10 px-5 max-md:flex-col max-md:items-center">
+      ProductDetails
+    </div>
+  );
 };
 
 export default ProductDetails;
