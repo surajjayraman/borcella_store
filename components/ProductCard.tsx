@@ -5,10 +5,12 @@ import { Heart } from "lucide-react";
 import { set } from "mongoose";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
   const { user } = useUser();
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [signedInUser, setSignedInUser] = useState<UserType | null>(null);
@@ -32,17 +34,26 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     }
   }, [user, product._id]);
 
-  const handleLike = async () => {
+  const handleLike = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
     try {
       setLoading(true);
-      const res = await fetch("/api/users/wishlist", {
-        method: "POST",
-        body: JSON.stringify({ productId: product._id }),
-      });
-      const updatedUser = await res.json();
-      setSignedInUser(updatedUser);
-      setIsLiked(updatedUser.wishlist.includes(product._id));
-      setLoading(false);
+      if (!signedInUser) {
+        router.push("/sign-in");
+        return;
+      } else {
+        const res = await fetch("/api/users/wishlist", {
+          method: "POST",
+          body: JSON.stringify({ productId: product._id }),
+        });
+        const updatedUser = await res.json();
+        setSignedInUser(updatedUser);
+        setIsLiked(updatedUser.wishlist.includes(product._id));
+        setLoading(false);
+      }
     } catch (err) {
       console.log("[ProductCard_handleLike]", err);
     }
