@@ -32,6 +32,22 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     }
   }, [user, product._id]);
 
+  const handleLike = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/users/wishlist", {
+        method: "POST",
+        body: JSON.stringify({ productId: product._id }),
+      });
+      const updatedUser = await res.json();
+      setSignedInUser(updatedUser);
+      setIsLiked(updatedUser.wishlist.includes(product._id));
+      setLoading(false);
+    } catch (err) {
+      console.log("[ProductCard_handleLike]", err);
+    }
+  };
+
   return (
     <div>
       <Link
@@ -51,7 +67,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         </div>
         <div className="flex justify-between items-center">
           <p className="text-body-bold">${product.price}</p>
-          <button>
+          <button onClick={handleLike}>
             <Heart fill={`${isLiked ? "red" : "white"}`} />
           </button>
         </div>
