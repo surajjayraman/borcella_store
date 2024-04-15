@@ -85,6 +85,15 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
           />
         </div>
       </div>
+
+      <button
+        className="outline text-base-bold py-3 rounded-lg hover:bg-black hover:text-white"
+        onClick={() => {
+          alert("Added to cart");
+        }}
+      >
+        Add To Cart
+      </button>
     </div>
   );
 };
