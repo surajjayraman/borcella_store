@@ -23,7 +23,7 @@ const HeartFavorite = ({ product }: { product: ProductType }) => {
         setIsLiked(data.wishlist.includes(product._id));
         setLoading(false);
       } catch (err) {
-        console.log("[Heart_getUser]", err);
+        console.log("[HeartFavorite_getUser]", err);
       }
     };
     if (user) {
@@ -48,7 +48,7 @@ const HeartFavorite = ({ product }: { product: ProductType }) => {
         setLoading(false);
       }
     } catch (err) {
-      console.log("[Heart_handleLike]", err);
+      console.log("[HeartFavorite_handleLike]", err);
     }
   };
   return (
@@ -60,4 +60,4 @@ const HeartFavorite = ({ product }: { product: ProductType }) => {
   );
 };
 
-export default Heart;
+export default HeartFavorite;
