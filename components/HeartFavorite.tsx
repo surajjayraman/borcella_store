@@ -31,7 +31,11 @@ const HeartFavorite = ({ product }: { product: ProductType }) => {
     }
   }, [user, product._id]);
 
-  const handleLike = async () => {
+  const handleLike = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
     try {
       setLoading(true);
       if (!signedInUser) {
