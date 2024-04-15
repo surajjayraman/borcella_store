@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import HeartFavorite from "./HeartFavorite";
+import { MinusCircle, PlusCircle } from "lucide-react";
 
 const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
   const [selectedColor, setSelectedColor] = useState<string>(
@@ -11,6 +12,8 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
   const [selectedSize, setSelectedSize] = useState<string>(
     productInfo.sizes[0]
   );
+
+  const [quantity, setQuantity] = useState<number>(1);
 
   return (
     <div className="max-w-[400px] flex flex-col gap-4">
@@ -67,6 +70,21 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
           </div>
         </div>
       )}
+
+      <div className="flex flex-col gap-2">
+        <p className="text-base-medium text-grey-2">Quantity:</p>
+        <div className="flex gap-4 items-center">
+          <MinusCircle
+            className="hover:text-red-1 cursor-pointer"
+            onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+          />
+          <p className="text-body-bold">{quantity}</p>
+          <PlusCircle
+            className="hover:text-red-1 cursor-pointer"
+            onClick={() => setQuantity(quantity + 1)}
+          />
+        </div>
+      </div>
     </div>
   );
 };
