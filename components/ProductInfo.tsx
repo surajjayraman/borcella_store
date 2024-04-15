@@ -23,7 +23,7 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
         setIsLiked(data.wishlist.includes(productInfo._id));
         setLoading(false);
       } catch (err) {
-        console.log("[ProductCard_getUser]", err);
+        console.log("[ProductInfo_getUser]", err);
       }
     };
     if (user) {
@@ -31,11 +31,7 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
     }
   }, [user, productInfo._id]);
 
-  const handleLike = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-
+  const handleLike = async () => {
     try {
       setLoading(true);
       if (!signedInUser) {
@@ -52,14 +48,16 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
         setLoading(false);
       }
     } catch (err) {
-      console.log("[ProductCard_handleLike]", err);
+      console.log("[ProductInfo_handleLike]", err);
     }
   };
   return (
     <div className="max-w-[400px] flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <p className="text-heading3-bold">{productInfo.title}</p>
-        <Heart />
+        <button onClick={handleLike}>
+          <Heart fill={`${isLiked ? "red" : "white"}`} />
+        </button>
       </div>
     </div>
   );
