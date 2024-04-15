@@ -8,9 +8,9 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
     productInfo.colors[0]
   );
 
-     const [selectedSize, setSelectedSize] = useState<string>(
-       productInfo.sizes[0]
-     );
+  const [selectedSize, setSelectedSize] = useState<string>(
+    productInfo.sizes[0]
+  );
 
   return (
     <div className="max-w-[400px] flex flex-col gap-4">
@@ -57,11 +57,11 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
               <p
                 key={index}
                 className={`border border-black px-2 py-1 rounded-lg cursor-pointer ${
-                  selectedColor === color && "bg-black text-white"
+                  selectedSize === size && "bg-black text-white"
                 }`}
-                onClick={() => setSelectedColor(color)}
+                onClick={() => setSelectedSize(size)}
               >
-                {color}
+                {size}
               </p>
             ))}
           </div>
