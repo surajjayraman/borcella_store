@@ -10,6 +10,8 @@ import { useState } from "react";
 const Navbar = () => {
   const { user } = useUser();
   const [dropdownMenu, setDropdownMenu] = useState(false);
+  const [query, setQuery] = useState("");
+
   const cart = useCart();
 
 
