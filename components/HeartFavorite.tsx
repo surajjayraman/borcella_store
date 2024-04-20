@@ -1,44 +1,46 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const HeartFavorite = ({ product }: { product: ProductType }) => {
-  const { user } = useUser();
+interface HeartFavoriteProps {
+  product: ProductType;
+  updateSignedInUser?: (updatedUser: UserType) => void;
+}
+
+const HeartFavorite = ({ product, updateSignedInUser }: HeartFavoriteProps) => {
   const router = useRouter();
+  const { user } = useUser();
 
   const [loading, setLoading] = useState(false);
-  const [signedInUser, setSignedInUser] = useState<UserType | null>(null);
   const [isLiked, setIsLiked] = useState(false);
 
+  const getUser = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/users");
+      const data = await res.json();
+      setIsLiked(data.wishlist.includes(product._id));
+      setLoading(false);
+    } catch (err) {
+      console.log("[users_GET]", err);
+    }
+  };
+
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/users");
-        const data = await res.json();
-        setSignedInUser(data);
-        setIsLiked(data.wishlist.includes(product._id));
-        setLoading(false);
-      } catch (err) {
-        console.log("[HeartFavorite_getUser]", err);
-      }
-    };
     if (user) {
       getUser();
     }
-  }, [user, product._id]);
+  }, [user]);
 
   const handleLike = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-
     try {
-      setLoading(true);
-      if (!signedInUser) {
+      if (!user) {
         router.push("/sign-in");
         return;
       } else {
@@ -47,20 +49,18 @@ const HeartFavorite = ({ product }: { product: ProductType }) => {
           body: JSON.stringify({ productId: product._id }),
         });
         const updatedUser = await res.json();
-        setSignedInUser(updatedUser);
         setIsLiked(updatedUser.wishlist.includes(product._id));
-        setLoading(false);
+        updateSignedInUser && updateSignedInUser(updatedUser);
       }
     } catch (err) {
-      console.log("[HeartFavorite_handleLike]", err);
+      console.log("[wishlist_POST]", err);
     }
   };
+
   return (
-    <div>
-      <button onClick={handleLike}>
-        <Heart fill={`${isLiked ? "red" : "white"}`} />
-      </button>
-    </div>
+    <button onClick={handleLike}>
+      <Heart fill={`${isLiked ? "red" : "white"}`} />
+    </button>
   );
 };
 
