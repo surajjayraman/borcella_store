@@ -1,6 +1,5 @@
 import { getCollections } from "@/lib/actions";
 import Image from "next/image";
-import Link from "next/link";
 
 const Collections = async () => {
   const collections = await getCollections();
@@ -12,15 +11,13 @@ const Collections = async () => {
       ) : (
         <div className="flex items-center justify-center gap-8">
           {collections?.map((collection: CollectionType) => (
-            <Link href={`/collections/${collection._id}`} key={collection._id}>
-              <Image
-                src={collection.image}
-                alt={collection.title}
-                width={350}
-                height={200}
-                className="rounded-lg cursor-pointer"
-              />
-            </Link>
+            <Image
+              key={collection._id}
+              src={collection.image}
+              alt={collection.title}
+              width={350}
+              height={200}
+            />
           ))}
         </div>
       )}
