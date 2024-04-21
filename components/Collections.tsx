@@ -17,6 +17,7 @@ const Collections = async () => {
               alt={collection.title}
               width={350}
               height={200}
+              className="h-[250px] rounded-lg object-cover"
             />
           ))}
         </div>
